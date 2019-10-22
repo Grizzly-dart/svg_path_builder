@@ -1,0 +1,13 @@
+name: svg_path_builder
+description: A simple and redundant library to build SVG path d attribute.
+version: 1.0.0
+homepage: https://github.com/Grizzly-dart/svg_path_builder
+author: Ravi Teja Gudapati <tejainece@gmail.com>
+
+environment:
+  sdk: '>=2.5.0 <3.0.0'
+
+dev_dependencies:
+  build_runner: ^1.6.0
+  build_web_compilers: ^2.3.0
+  pedantic: ^1.8.0
