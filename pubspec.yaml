@@ -14,9 +14,10 @@ dev_dependencies:
   vizdom_select:
   grizzly_range:
   grizzly_scales:
+  grizzly_stat:
   #grizzly_axis:
 
-dependencies_overrides:
+dependency_overrides:
   vizdom_select:
     path: ../select
   grizzly_range:
@@ -25,3 +26,5 @@ dependencies_overrides:
     path: ../scales
   grizzly_axis:
     path: ../axis
+  grizzly_stat:
+    path: ../stat

@@ -2,9 +2,7 @@ import 'dart:math';
 import 'package:svg_path_builder/src/curve/curve.dart';
 import 'package:svg_path_builder/svg_path_builder.dart';
 
-typedef ToNum<DT> = num Function(DT object);
-
-typedef Mapper<OT, IT> = OT Function(IT input);
+typedef ToPoint<DT> = Point<num> Function(DT object);
 
 typedef BaseLineMapper<DT> = Point<num> Function(DT data, Point<num> point);
 
@@ -13,10 +11,11 @@ typedef IsDefined<DT> = bool Function(DT object);
 bool _alwaysDefined(_) => true;
 
 String area<DT>(List<DT> data,
-    {Mapper<Point<num>, DT> mapper,
+    {ToPoint<DT> mapper,
     BaseLineMapper<DT> baseLineMapper,
     IsDefined<DT> isDefined = _alwaysDefined,
-    Curve curve = const LinearCurve()}) {
+    Curve curve = const LinearCurve(),
+    Curve baseLineCurve = const LinearCurve()}) {
   final builder = Builder();
 
   var currentLine = <Point>[];
@@ -33,12 +32,12 @@ String area<DT>(List<DT> data,
   }
 
   void draw() {
-    if(currentLine.isNotEmpty) {
+    if (currentLine.isNotEmpty) {
       builder.moveTo(currentLine.first.x, currentLine.first.y);
       builder.add(curve.draw(currentLine));
-      if(currentBaseLine.isNotEmpty) {
+      if (currentBaseLine.isNotEmpty) {
         builder.lineTo(currentBaseLine.last.x, currentBaseLine.last.y);
-        builder.add(LinearCurve().draw(currentBaseLine.reversed));
+        builder.add(baseLineCurve.draw(currentBaseLine.reversed));
         builder.lineTo(currentLine.first.x, currentLine.first.y);
       }
     }
@@ -79,7 +78,7 @@ String area<DT>(List<DT> data,
 }
 
 String line<DT>(List<DT> data,
-    {Mapper<Point<num>, DT> mapper,
+    {ToPoint<DT> mapper,
     IsDefined<DT> isDefined = _alwaysDefined,
     Curve curve = const LinearCurve()}) {
   final builder = Builder();
@@ -121,7 +120,7 @@ String line<DT>(List<DT> data,
 
 String point<DT>(
   List<DT> data, {
-  Mapper<Point<num>, DT> mapper,
+  ToPoint<DT> mapper,
   ShapePainter shape = const CirclePainter(),
   IsDefined<DT> isDefined = _alwaysDefined,
   num radius = 10,

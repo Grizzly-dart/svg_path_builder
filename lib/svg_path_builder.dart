@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'src/commands.dart';
 
 export 'src/commands.dart';
+export 'src/stack.dart';
 
 class Builder {
   final List<String> paths = [];
@@ -53,6 +54,7 @@ class Builder {
     paths.add(Arc(
             rx: rx,
             ry: ry,
+            xRotation: xRotation,
             largeArcFlag: largeArcFlag,
             sweepFlag: sweepFlag,
             x: x,
@@ -71,6 +73,35 @@ class Builder {
     paths.add("v$height");
     paths.add("h${-width}");
     paths.add("Z");
+  }
+
+  void pie(
+    num radius, {
+    math.Point<num> c = const math.Point<num>(0, 0),
+    num innerRadius = 0,
+    num startAngle = 0,
+    num endAngle = 2 * math.pi,
+  }) {
+    final p1 = math.Point<num>(
+            math.cos(startAngle) * radius, math.sin(startAngle) * radius) +
+        c;
+    final p2 = math.Point<num>(
+            math.cos(endAngle) * radius, math.sin(endAngle) * radius) +
+        c;
+
+    final p3 = math.Point<num>(math.cos(endAngle) * innerRadius,
+            math.sin(endAngle) * innerRadius) +
+        c;
+    final p4 = math.Point<num>(math.cos(startAngle) * innerRadius,
+            math.sin(startAngle) * innerRadius) +
+        c;
+
+    moveTo(p1.x, p1.y);
+    arcTo(radius, radius, 0, 0, 1, p2.x, p2.y);
+    lineTo(p3.x, p3.y);
+    arcTo(innerRadius, innerRadius, 0, 0, 0, p4.x, p4.y);
+    lineTo(p1.x, p1.y);
+    closePath();
   }
 
   String get asSvg => paths.join(' ');
