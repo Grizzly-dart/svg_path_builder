@@ -1,7 +1,7 @@
 import 'package:grizzly_range/grizzly_range.dart';
 
-Stack stack<T, KT>(Iterable<KT> keys, Iterable<T> domain,
-    num Function(KT key, T domain) getter,
+Stack stack<DT, KT>(Iterable<KT> keys, Iterable<DT> domain,
+    num Function(KT key, int index, DT domain) getter,
     {num offset = 0}) {
   final numCurves = keys.length;
   final numDomain = domain.length;
@@ -16,7 +16,7 @@ Stack stack<T, KT>(Iterable<KT> keys, Iterable<T> domain,
     num sum = offset;
     int j = 0;
     for (final k in keys) {
-      num value = getter(k, d);
+      num value = getter(k, i, d);
       ret[j][i] = Extent<num>(sum, sum + value);
       sum += value;
       j++;

@@ -10,7 +10,7 @@ typedef IsDefined<DT> = bool Function(DT object);
 
 bool _alwaysDefined(_) => true;
 
-String area<DT>(List<DT> data,
+String area<DT>(Iterable<DT> data,
     {ToPoint<DT> mapper,
     BaseLineMapper<DT> baseLineMapper,
     IsDefined<DT> isDefined = _alwaysDefined,

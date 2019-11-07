@@ -31,10 +31,10 @@ void main() {
         final rects = indices(ref.data.length).map((i) {
           final r = ref.data.elementAt(i);
 
-          final pY = yScale.scale(r.lower);
-          final height = yScale.scale(r.upper - r.lower) - yScale.range.first;
+          final top = yScale.scale(r.upper);
+          final bottom = yScale.scale(r.lower);
 
-          return Rect(left, pY, width, height);
+          return Rect(left, bottom, width, top - bottom);
         }).toList();
 
         ref.bind('.bar', rects)
