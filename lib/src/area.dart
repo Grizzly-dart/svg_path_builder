@@ -121,7 +121,7 @@ String line<DT>(List<DT> data,
 String point<DT>(
   List<DT> data, {
   ToPoint<DT> mapper,
-  ShapePainter shape = const CirclePainter(),
+  SymbolPather shape = const CirclePainter(),
   IsDefined<DT> isDefined = _alwaysDefined,
   num radius = 10,
 }) {
@@ -137,11 +137,11 @@ String point<DT>(
   return builder.asSvg;
 }
 
-abstract class ShapePainter {
+abstract class SymbolPather {
   String draw(Point<num> at, num radius);
 }
 
-class CirclePainter implements ShapePainter {
+class CirclePainter implements SymbolPather {
   const CirclePainter();
 
   String draw(Point<num> at, num radius) =>
